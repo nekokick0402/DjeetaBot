@@ -1,22 +1,19 @@
 import discord
-from discord.ext import commands
+import requests
 
-intents = discord.Intents.default()
-intents.message_content = True
-client = commands.Bot(command_prefix='!', intents=intents)
+TOKEN = 'MTI4NTU1MTU0ODIxNDI4NDMxOQ.GVBsa3.iPcwYUjyEVXE6VarUio91LJqFXW6LuJLovJ-cg'
+client = discord.Client()
 
 @client.event
 async def on_ready():
     print(f'Logged in as {client.user}')
 
-@client.command()
-async def ping(ctx):
-    await ctx.send('Pong!')
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
 
-@client.command()
-async def hello(ctx):
-    await ctx.send('Hello!')
+    if message.content.startswith('!hello'):
+        await message.channel.send('Hello!')
 
-# グラブル用の機能をここに追加
-
-client.run('YOUR_BOT_TOKEN')
+client.run(TOKEN)
